@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Nine Men's Morris</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <div id="game-setup" class="setup-screen">
+        <h1>Nine Men's Morris</h1>
+        <div class="mode-buttons">
+            <button onclick="selectMode('human')">Human vs Human</button>
+            <button onclick="selectMode('bot')">Human vs Bot</button>
+        </div>
+        <div id="name-inputs" class="hidden">
+            <div class="input-group">
+                <label for="player1">Player 1 Name:</label>
+                <input type="text" id="player1" placeholder="Enter name">
+            </div>
+            <div class="input-group">
+                <label for="player2">Player 2 Name:</label>
+                <input type="text" id="player2" placeholder="Enter name">
+            </div>
+            <button onclick="startGame()">Start Game</button>
+        </div>
+    </div>
+
+    <div id="game-board" class="hidden">
+        <div class="header">
+            <span class="turn">Turn: <span id="turn">Player 1</span></span>
+            <span class="message">Message: <span id="message">Click on empty spot to place your piece</span></span>
+        </div>
+        <div class="mid">
+            <canvas height="550" width="550" id="myCanvas">
+                Your browser does not support the HTML5 canvas tag.
+            </canvas>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

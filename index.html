@@ -2,6 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="screen-orientation" content="any">
+    <meta name="x5-orientation" content="any">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Nine Men's Morris</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -11,8 +17,8 @@
     <div id="game-setup" class="setup-screen">
         <h1>Nine Men's Morris</h1>
         <div class="mode-buttons">
-            <button onclick="selectMode('human')">Human vs Human</button>
-            <button onclick="selectMode('bot')">Human vs Bot</button>
+            <button class="game-mode-btn">Human vs Human</button>
+            <button class="game-mode-btn">Human vs Bot</button>
         </div>
         <div id="name-inputs" class="hidden">
             <div class="input-group">
@@ -23,7 +29,7 @@
                 <label for="player2">Player 2 Name:</label>
                 <input type="text" id="player2" placeholder="Enter name">
             </div>
-            <button onclick="startGame()">Start Game</button>
+            <button class="start-game-btn">Start Game</button>
         </div>
     </div>
 

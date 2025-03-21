@@ -6,6 +6,29 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+    background-size: cover;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mid {
+    position: relative;
+    width: 100%;
+    max-width: 550px;
+}
+
+#myCanvas {
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    will-change: transform;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    max-width: 100%;
+    height: auto;
+    touch-action: none;
 }
 
 .setup-screen {
@@ -14,11 +37,16 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
+    touch-action: manipulation;
+    width: 90%;
+    max-width: 500px;
+    margin: 1rem;
 }
 
 .setup-screen h1 {
     color: #2c3e50;
     margin-bottom: 2rem;
+    font-size: 1.5rem;
 }
 
 .mode-buttons {
@@ -26,6 +54,8 @@ body {
     gap: 1rem;
     justify-content: center;
     margin-bottom: 2rem;
+    flex-direction: column;
+    width: 100%;
 }
 
 button {
@@ -36,6 +66,9 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease;
+    touch-action: manipulation;
+    width: 100%;
+    font-size: 1rem;
 }
 
 button:hover {
@@ -44,6 +77,7 @@ button:hover {
 
 .input-group {
     margin-bottom: 1rem;
+    width: 100%;
 }
 
 .input-group label {
@@ -54,9 +88,11 @@ button:hover {
 
 .input-group input {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.8rem;
     border: 1px solid #bdc3c7;
     border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
 }
 
 .hidden {
@@ -65,9 +101,13 @@ button:hover {
 
 #game-board {
     background: rgba(255, 255, 255, 0.9);
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    touch-action: manipulation;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .header {
@@ -76,13 +116,52 @@ button:hover {
     margin-bottom: 1rem;
     font-weight: bold;
     color: #2c3e50;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
-.mid {
-    position: relative;
+/* Mobile-specific styles */
+@media (max-width: 600px) {
+    .setup-screen {
+        margin: 0.5rem;
+        padding: 1rem;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .setup-screen h1 {
+        font-size: 1.25rem;
+    }
+
+    button {
+        padding: 1rem;
+    }
+
+    #game-board {
+        padding: 0.5rem;
+    }
+
+    .input-group input {
+        padding: 0.6rem;
+    }
 }
 
-#myCanvas {
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Prevent text selection */
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Allow text selection in input fields */
+input {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
 }

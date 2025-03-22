@@ -901,9 +901,9 @@ function makeBotRemoval() {
     let bestScore = -Infinity;
 
     // Find all removable human pieces
-    for (let i = 0; i < 7; i++) {
-        for (let j = 0; j < 7; j++) {
-            if (positionMatrix[i][j] === playerOneCode) {
+        for (let i = 0; i < 7; i++) {
+            for (let j = 0; j < 7; j++) {
+                if (positionMatrix[i][j] === playerOneCode) {
                 // Check if piece is not part of a mill or if all pieces are in mills
                 if (!checkMill(i, j, playerOneCode) || allArePartOfMill(playerOneCode)) {
                     let score = 0;
@@ -932,15 +932,15 @@ function makeBotRemoval() {
         let {xCenter, yCenter} = getCenterCoordinates(bestPieceToRemove.x, bestPieceToRemove.y);
         
         // Clear the piece from the board
-        clearBlock(xCenter, yCenter);
-        
+            clearBlock(xCenter, yCenter);
+            
         // Update position matrix and counters
         positionMatrix[bestPieceToRemove.x][bestPieceToRemove.y] = 0;
-        greenBlocks--;
-        
+            greenBlocks--;
+            
         // Turn off mill state immediately
-        isMillRed = false;
-        
+            isMillRed = false;
+            
         // Update display
         document.getElementById("message").innerHTML = "Green block removed";
         document.getElementById("turn").innerHTML = player1Name;
@@ -949,13 +949,13 @@ function makeBotRemoval() {
         window.isBotMoving = false;
         
         // Update the board
-        update();
-        
+            update();
+            
         // Switch turn to human player after piece removal
         numberOfTurns++;
         
         // Check for game over conditions
-        checkGameOver();
+                checkGameOver();
         
         // Clear any existing bot move timeout
         if (window.botMoveTimeout) {
@@ -1100,11 +1100,11 @@ function clearBlock(xI, yI) {
     
     // Always redraw the board image section
     if (boardImage.complete && boardImage.naturalWidth !== 0) {
-        context.drawImage(boardImage, 
+        context.drawImage(boardImage,
                          x, y,
                          clearSize, clearSize,
                          x, y,
-                         clearSize, clearSize);
+                        clearSize, clearSize);
     }
     
     // Find the matrix coordinates for this position
@@ -1169,7 +1169,7 @@ function drawBlock(x, y, X, Y) {
     context.lineWidth = strokeWidth;
     context.strokeStyle = '#003300';
     context.stroke();
-
+    
     // Check for mill formation
     if (checkMill(X, Y, currentPlayerCode)) {
         console.log(`Mill formed at (${X}, ${Y}) for player ${currentPlayerCode}`);
@@ -1177,7 +1177,7 @@ function drawBlock(x, y, X, Y) {
             isMillGreen = true;
             document.getElementById("turn").innerHTML = player1Name;
             document.getElementById("message").innerHTML = "A Mill is formed. Click on red block to remove it.";
-        } else {
+    } else {
             isMillRed = true;
             document.getElementById("turn").innerHTML = player2Name;
             document.getElementById("message").innerHTML = "Bot is removing a piece...";
@@ -1246,7 +1246,7 @@ function checkMill(x, y, playerCode) {
         }
     }
 
-    // Middle column vertical mills (y = 3)
+    // Middle column vertical mills
     if (y === 3) {
         // Top side mill (positions 0, 1, 2)
         if (x <= 2 && positionMatrix[0][y] === playerCode &&
@@ -1301,7 +1301,7 @@ function checkMill(x, y, playerCode) {
         }
     }
 
-    // Check middle row horizontal mills
+    // Middle row horizontal mills
     if (x === 3) {
         // Left side mill (positions 0, 1, 2)
         if (y <= 2 && positionMatrix[x][0] === playerCode &&
@@ -1323,107 +1323,55 @@ function checkMill(x, y, playerCode) {
     return false;
 }
 
-function checkThreeLeft(playerCode) {
-    return (numberOfTurns >= 18 && ((playerCode == 1 ? greenBlocks : redBlocks) == 3));
-}
-
 function checkGameOver() {
     console.log('Checking game over conditions...');
     console.log(`Current state: redBlocks=${redBlocks}, greenBlocks=${greenBlocks}, turns=${numberOfTurns}`);
-    
-    // Check for having only 2 pieces left regardless of phase
-    if (redBlocks <= 2) {
-        console.log('Bot has 2 or fewer pieces - human wins');
-        showGameEndScreen(player1Name, `${player2Name} has only ${redBlocks} pieces left!`);
-        return;
-    } else if (greenBlocks <= 2) {
-        console.log('Human has 2 or fewer pieces - bot wins');
-        showGameEndScreen(player2Name, `${player1Name} has only ${greenBlocks} pieces left!`);
-        return;
-    }
-    
-    // Only check for no valid moves during movement phase (after turn 18)
-    if (numberOfTurns >= 18) {
-        if (!canMove(playerOneCode, greenBlocks)) {
-            console.log('Human has no valid moves - bot wins');
-            showGameEndScreen(player2Name, `No possible moves left for ${player1Name}`);
-        } else if (!canMove(playerTwoCode, redBlocks)) {
-            console.log('Bot has no valid moves - human wins');
-            showGameEndScreen(player1Name, `No possible moves left for ${player2Name}`);
-        }
-    }
-}
 
-function allArePartOfMill(playerCode) {
-    for (var i = 0; i < rows; i++) {
-        for (var j = 0; j < columns; j++) {
-            if (positionMatrix[i][j] == playerCode) {
-                if (!checkMill(i, j, playerCode)) {
-                    return false;
-                }
-            }
-        }
-    }
-    return true;
-}
+    let humanHasValidMoves = false;
 
-function canMove(playerCode, blocksLeft) {
-    if (blocksLeft == 3) {
-        return true;
-    }
-    for (var i = 0; i < rows; i++) {
-        for (var j = 0; j < columns; j++) {
-            if (positionMatrix[j][i] == playerCode) {
-                if (!(j == 4 && i == 3)) {
-                    for (var k = j - 1; k >= 0; k--) {
-                        if (positionMatrix[k][i] != -1) {
-                            if (positionMatrix[k][i] == 0) {
-                                return true;
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!(j == 3 && i == 4)) {
-                for (var l = i - 1; l >= 0; l--) {
-                    if (positionMatrix[j][l] != -1) {
-                        if (positionMatrix[j][l] == 0) {
-                            return true;
-                        } else {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (!(j == 2 && i == 3)) {
-        for (var m = j + 1; m < 7; m++) {
-            if (positionMatrix[m][i] != -1) {
-                if (positionMatrix[m][i] == 0) {
-                    return true;
-                } else {
+    // Iterate over all positions to check if the human player has any valid moves
+    for (let i = 0; i < 7; i++) {
+        for (let j = 0; j < 7; j++) {
+            if (positionMatrix[i][j] === playerOneCode) {
+                const validMoves = getValidMoves(i, j);
+                if (validMoves.length > 0) {
+                    humanHasValidMoves = true;
                     break;
                 }
             }
         }
+        if (humanHasValidMoves) break;
     }
 
-    if (!(j == 3 && i == 2)) {
-        for (var n = i + 1; n < 7; n++) {
-            if (positionMatrix[j][n] != -1) {
-                if (positionMatrix[j][n] == 0) {
-                    return true;
-                } else {
-                    break;
-                }
-            }
+    if (!humanHasValidMoves) {
+        console.log('Human has no valid moves - bot wins');
+        // Ensure resetGame is defined or handle the game over state appropriately
+        if (typeof resetGame === 'function') {
+            resetGame();
+        } else {
+            console.error('resetGame function is not defined');
         }
     }
+}
+
+function getValidMoves(x, y) {
+    let moves = [];
+    
+    // Check all possible directions for a valid move
+    const directions = [
+        { dx: -1, dy: 0 }, { dx: 1, dy: 0 }, // Vertical
+        { dx: 0, dy: -1 }, { dx: 0, dy: 1 }  // Horizontal
+    ];
+    
+    for (const { dx, dy } of directions) {
+        const newX = x + dx;
+        const newY = y + dy;
+        if (newX >= 0 && newX < 7 && newY >= 0 && newY < 7 && positionMatrix[newX][newY] === 0) {
+            moves.push({x: newX, y: newY});
+        }
+    }
+    
+    return moves;
 }
 
 function update() {
@@ -1513,8 +1461,8 @@ function mouseClick(event) {
 
     for (const point of intersections) {
         const distance = Math.sqrt(Math.pow(X - point.x, 2) + Math.pow(Y - point.y, 2));
-        if (distance < minDistance) {
-            minDistance = distance;
+                if (distance < minDistance) {
+                    minDistance = distance;
             closestPoint = point;
         }
     }
@@ -1736,6 +1684,4 @@ function isValidMove(fromX, fromY, toX, toY) {
     const isValid = possibleMoves.some(move => move.x === toX && move.y === toY);
     console.log('Move is valid:', isValid);
     return isValid;
-}
-
-
+}v

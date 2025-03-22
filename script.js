@@ -1,4 +1,3 @@
-
 const PLAYER = {
     HUMAN: 1,
     BOT: 2
